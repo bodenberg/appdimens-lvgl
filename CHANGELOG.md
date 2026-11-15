@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## Latest — in production (`main`)
 - Custom scaling strategies: `appdimens_custom.h` (C99 single header, C++ compatible) ports `appdimens-dynamic` library-custom — shared JSON document, text formulas, code factors/formulas, rules, built-ins and presets; `adc_dp/adc_sp/adc_px`; `tests/test_custom.c` reproduces the 540-case cross-platform fixture.
 
 ## 3.2.0 — first release
