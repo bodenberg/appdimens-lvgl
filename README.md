@@ -73,6 +73,21 @@ Text scale (accessibility): `lv_appdimens_set_font_scale(1.25f)`. UI mode: `lv_a
 
 The portable core (`src/appdimens.h`) is also available directly: `ad_sdp(m, 16)` etc.
 
+## Custom strategies
+
+Your own scaling rule, shared with every AppDimens platform (same JSON document and text formulas),
+through the C99 single header `appdimens_custom.h`:
+
+```c
+#define ADC_IMPLEMENTATION
+#include "appdimens_custom.h"
+adc_load_json(json_text, err, sizeof err);                       /* ids + "default" */
+float pad = adc_dp(adc_get("brand"), lv_appdimens_get_metrics(), 16);
+adc_strategy *hud = adc_formula("base * pow(sw / 360, 0.8)", err, sizeof err);
+```
+
+Reproduces the cross-platform 540-case fixture. Details: [docs/CUSTOM.md](docs/CUSTOM.md).
+
 ## Precision and performance
 
 - **Integer hot path:** a token is one 64-bit integer multiply over a Q16.16 table (verified: on Cortex-M0 the call

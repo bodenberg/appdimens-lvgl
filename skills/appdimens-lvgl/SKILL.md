@@ -15,3 +15,10 @@ description: Use for responsive LVGL UIs (v8.3 / v9.x) on MCUs and embedded Linu
 6. Validate on the smallest and largest supported panel and after rotation.
 
 Don'ts: don't call `lv_ad_dimen()` in draw loops (it parses); don't forget `lv_ad_style_unbind()` before `lv_style_reset()`.
+
+## Custom strategies
+
+Only when the project declares `customStrategies` (or the user asks for their own rule): one
+`#define ADC_IMPLEMENTATION` + `#include "appdimens_custom.h"`, `adc_load_json(text, err, n)` at start-up, then
+`adc_dp(adc_get("brand"), lv_appdimens_get_metrics(), 16)` / `adc_sp(...)`. One-off math: `adc_formula("base * pow(sw / 360, 0.8)", err, n)`. Never invent
+ids; not available in `AD_FIXED_POINT` builds. Reference: `docs/CUSTOM.md`.
