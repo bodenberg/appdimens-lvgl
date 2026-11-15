@@ -1,0 +1,7 @@
+# appdimens-lvgl
+
+> AppDimens for LVGL 8.3+ and 9.x: responsive integer pixel sizes (`lv_ad_sdp`, `lv_ad_asdp`, `lv_ad_ssp`, `lv_ad_ftsdp`…), auto-update on resolution/rotation change, responsive style bindings, bitmap font picking. Integer-only hot path (no FPU), zero heap. ESP-IDF, PlatformIO, Arduino, Zephyr, CMake. Version 3.2.0.
+
+- [README](README.md) · [Guide](docs/GUIDE.md) · [Skill](skills/appdimens-lvgl/SKILL.md)
+- Core: `src/appdimens.h` (same C99 core as appdimens-gtk) · glue: `src/lv_appdimens.h`
+- Hub: https://github.com/bodenberg/appdimens

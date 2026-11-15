@@ -1,0 +1,29 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          for v in "" "-DAD_USE_DOUBLE" "-DAD_NO_LIBM" "-DAD_FIXED_POINT" "-DAD_FIXED_POINT -DAD_NO_LIBM"; do
+            cc -std=c99 -O2 -Wall -Wextra -Werror -pedantic $v -Isrc -Itests tests/test_core.c -o t -lm && ./t
+          done
+  lvgl:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lvgl: ["8", "9"]
+    steps:
+      - uses: actions/checkout@v4
+      - run: git clone --depth 1 -b release/v${{ matrix.lvgl == '8' && '8.3' || '9.2' }} https://github.com/lvgl/lvgl ../lvgl
+      - run: EXTRA_CFLAGS="-fsanitize=address,undefined" tests/run_lvgl_tests.sh ../lvgl ${{ matrix.lvgl }}
+  mcu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi
+      - run: |
+          for cpu in "cortex-m0 -mthumb -mfloat-abi=soft" "cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard" "cortex-m33 -mthumb"; do
+            arm-none-eabi-gcc -std=c99 -Os -mcpu=$cpu -Wall -Wextra -Werror -DAD_NO_LIBM -DAD_FIXED_POINT -Isrc -Itests -c tests/test_core.c -o m.o
+          done

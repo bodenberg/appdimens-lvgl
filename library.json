@@ -1,0 +1,13 @@
+{
+  "name": "appdimens-lvgl",
+  "version": "3.2.0",
+  "description": "AppDimens for LVGL v8/v9: responsive sdp/ssp sizes for any display, integer hot path, auto-update on resolution/rotation change",
+  "keywords": "lvgl, responsive, dpi, scaling, display, ui, embedded, esp32, stm32, rp2040",
+  "license": "Apache-2.0",
+  "repository": { "type": "git", "url": "https://github.com/bodenberg/appdimens-lvgl.git" },
+  "authors": [{ "name": "Jean Bodenberg" }],
+  "frameworks": "*",
+  "platforms": "*",
+  "dependencies": { "lvgl/lvgl": ">=8.3.0" },
+  "build": { "srcDir": "src", "includeDir": "src", "flags": ["-DLV_LVGL_H_INCLUDE_SIMPLE"] }
+}

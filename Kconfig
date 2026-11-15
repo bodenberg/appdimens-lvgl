@@ -1,0 +1,7 @@
+menu "AppDimens for LVGL"
+    config APPDIMENS_NO_LIBM
+        bool "Use built-in log/pow instead of libm"
+        default n
+        help
+            Builds without libm (the factors are computed once per resolution change; the hot path is integer-only).
+endmenu

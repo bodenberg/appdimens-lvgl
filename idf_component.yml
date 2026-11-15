@@ -1,0 +1,6 @@
+version: "3.2.0"
+description: "AppDimens for LVGL — responsive sdp/ssp sizes, integer hot path, auto-update on resolution/rotation change"
+url: "https://github.com/bodenberg/appdimens-lvgl"
+license: "Apache-2.0"
+dependencies:
+  lvgl/lvgl: ">=8.3.0"
