@@ -9,6 +9,11 @@ jobs:
           for v in "" "-DAD_USE_DOUBLE" "-DAD_NO_LIBM" "-DAD_FIXED_POINT" "-DAD_FIXED_POINT -DAD_NO_LIBM"; do
             cc -std=c99 -O2 -Wall -Wextra -Werror -pedantic $v -Isrc -Itests tests/test_core.c -o t -lm && ./t
           done
+      - name: custom strategies (540-case fixture)
+        run: |
+          for v in "" "-DAD_USE_DOUBLE" "-fsanitize=address,undefined"; do
+            cc -std=c99 -O2 -Wall -Wextra -Werror -pedantic $v -Isrc -Itests tests/test_custom.c -o tc -lm && ./tc
+          done
   lvgl:
     runs-on: ubuntu-latest
     strategy:
@@ -27,3 +32,4 @@ jobs:
           for cpu in "cortex-m0 -mthumb -mfloat-abi=soft" "cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard" "cortex-m33 -mthumb"; do
             arm-none-eabi-gcc -std=c99 -Os -mcpu=$cpu -Wall -Wextra -Werror -DAD_NO_LIBM -DAD_FIXED_POINT -Isrc -Itests -c tests/test_core.c -o m.o
           done
+          arm-none-eabi-gcc -std=c99 -Os -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra -Werror -Isrc -Itests -c tests/test_custom.c -o c.o
